@@ -1,11 +1,9 @@
 ---
 title: "Practical Machine Learning Course Project: Predicting proper exercise from wearable accelerometer sensor data"
 author: "Jeffrey Thatcher"
-date: "Monday, February 15, 2016"
+date: "Saturday, February 27, 2016"
 output: html_document
 ---
-
-You should create a report describing how you built your model, how you used cross validation, what you think the expected out of sample error is, and why you made the choices you did. You will also use your prediction model to predict 20 different test cases.
 
 #1.0 Background
 
@@ -166,4 +164,4 @@ fancyRpartPlot(summary(bagging)$mtrees[[25]]$btree)
 #4.0 Results
 Final results in predicting the hold-out "testing" data set show that LDA was 69% accurate, the decision tree was 55% accurate, and the bagged trees model was 99% accurate. 
 
-The bootstrap aggregated decision tree model built using the treebag method in the `caret` function performed best of the three models tested. The tuning parameter `nbagg` was set to 25, which means the model is the result of aggregating 25 decision trees generated from bootstrapped training data. The model may perform better with more aggregates, the consequence of which may be even more reduced variance in the model.  However, it is likely that the tradeoff between processing time to generate the model and increase in accuracy is not valuable considering the model is already very accurate anf it takes about 5 min to generate the model on a standard laptop computer (Core i7, 8GB RAM).
+The bootstrap aggregated decision tree model built using the treebag method in the `caret` function performed best of the three models tested. The tuning parameter `nbagg` was set to 25, which means the model is the result of aggregating 25 decision trees generated from bootstrapped training data. The model may perform better with more aggregates, the consequence of which may be even more reduced variance in the model.  However, it is likely that the tradeoff between processing time to generate the model and increase in accuracy is not valuable considering the model is already very accurate anf it takes about 15 min to generate the model on a standard laptop computer (Core i7, 8GB RAM).
