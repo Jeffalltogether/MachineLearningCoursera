@@ -1,5 +1,5 @@
 ---
-title: "Practical Machine Learning Course Project: Predicting proper exercise form with wearable accelerometer sensor data"
+title: "Practical Machine Learning Course Project: Predicting proper exercise from wearable accelerometer sensor data"
 author: "Jeffrey Thatcher"
 date: "Monday, February 15, 2016"
 output: html_document
@@ -21,7 +21,7 @@ The raw data was loaded and, by using the time stamp variables, a plot of the ac
 
 ```{r warning=F, message=F, echo=F, cache=F}
 ### Set WD, Load Libraries and Data
-setwd("C:/Users/jeffthatcher/Cloud Drive/RRepos/PracticalMachineLearning/PracticalMachineLearning")
+setwd("C:/Users/jeffthatcher/Cloud Drive/RRepos/PracticalMachineLearning/MachineLearningCoursera")
 library(caret)
 library(ggplot2)
 library(moments)
@@ -31,7 +31,7 @@ library(tidyr)
 source("multiplot.R")
 ```
 
-```{r warning=F, message=F, echo=F, cache=F}
+```{r warning=F, message=F, echo=F, cache=T}
 ###load training dataset
 trainData <- as.data.frame(read.csv("pml-training.csv", na.strings=c("","NA")))
 quizData <- as.data.frame(read.csv("pml-testing.csv", na.strings=c("","NA")))
@@ -59,7 +59,7 @@ trainData <- trainData %>%
 ```
 
 ##2.2 Plot of sensor data from one user
-```{r warning=F, message=F, echo=F, fig.height=6, fig.width=6, cache=F}
+```{r warning=F, message=F, echo=F, fig.height=6, fig.width=6, cache=T}
 # plot timeseries for a few data points
 p1 <- ggplot(trainData[grep("carlitos A", trainData$exerciseID),], aes(newTime, gyros_arm_y, color=user_name))+geom_line(color="green")
 
@@ -79,7 +79,7 @@ multiplot(p1, p2, p3, p4, p5, cols = 2)
 ##2.3 Cleaning Data
 To clean the data first, the column with no predictive values were removed, such as the time stamp and row number columns.  Following that, columns that were empty and those that contained missing data (NA) were removed.
 
-```{r warning=F, message=F, echo=T, cache=F}
+```{r warning=F, message=F, echo=T, cache=T}
 ###Eliminate columns with missing and unrelated
 cleanData <- function(dataframe){
 
@@ -111,7 +111,7 @@ quizData <- cleanData(quizData)
 ##2.4 Data Partitions
 Once the sensor data was cleaned it was then prepared for predictive modeling. To prepare the data, the training dataset was separated into "Training" and "Test" datasets using the `caret` package's `createDataPartition` function.
 
-```{r warning=F, message=F, echo=T, cache=F}
+```{r warning=F, message=F, echo=T, cache=T}
 #Separate training and test data
 # We will remove one person from each level of the variable `classe` as the test set
 set.seed(1000)
@@ -124,7 +124,7 @@ testing = trainData[-trainIndex,]
 Three predictive models were trained including: linear discriminant analysis (LDA); decision Tree; and bagged decision tree. Accuracy was determined by cross-validation for each of the three models and then we applied the model to the "testing" data set that was partitioned in section *2.4 Data Partitions*.  The final model was selected based on the "testing"" data set accuracy. Testing data results are presented as a confusion matrix using the `confusionMatrix` function from the `caret` package.
 
 ##3.1 Linear Discriminant Analysis
-```{r warning=F, message=F, echo=T, cache=F}
+```{r warning=F, message=F, echo=T, cache=T}
 ### Train lda Classifier
 #fit model
 Lda <- train(classe ~ ., method="lda", data=training)
@@ -136,7 +136,7 @@ confusionMatrix(testing$classe, pred)
 
 
 ##3.2 Trees
-```{r warning=F, message=F, fig.height=6, fig.width=6, cache=F}
+```{r warning=F, message=F, fig.height=6, fig.width=6, cache=T}
 library(rattle)
 
 #fit model
